@@ -1,5 +1,10 @@
 import 'package:my_caff/feauture/domain/entites/user_entity.dart';
 
+Map<String, dynamic> createUserFromEntity(UserEntity data) {
+  var model = UserModel.convertEntityToModel(data);
+  return model.toJson();
+}
+
 class UserModel extends UserEntity {
   UserModel({
     required super.name,
@@ -26,6 +31,15 @@ class UserModel extends UserEntity {
       password: json['password'],
       email: json['email'],
       address: json['address'],
+    );
+  }
+  static UserModel convertEntityToModel(UserEntity entity) {
+    return UserModel(
+      name: entity.name,
+      username: entity.username,
+      password: entity.password,
+      email: entity.email,
+      address: entity.address,
     );
   }
 }

@@ -8,16 +8,16 @@ class SignInModel extends SignInEntity {
   });
   Map<String, dynamic> toJson() {
     return {
-      'accessToken': accessToken,
-      'tokenType': tokenType,
+      'access_token': accessToken,
+      'token_type': tokenType,
       'role': role,
     };
   }
 
   factory SignInModel.fromJson(Map<String, dynamic> json) {
     return SignInModel(
-      accessToken: json['accessToken'],
-      tokenType: json['tokenType'],
+      accessToken: json['access_token'],
+      tokenType: json['token_type'],
       role: json['role'],
     );
   }
