@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:my_caff/feauture/presentation/controllers/base_controller.dart';
 import 'package:my_caff/feauture/presentation/controllers/login_controller.dart';
-import 'package:my_caff/feauture/presentation/controllers/sign_in_controller.dart';
+import 'package:my_caff/feauture/presentation/controllers/main_controller.dart';
+import 'package:my_caff/feauture/presentation/controllers/splash_controller.dart';
 
 class RootBinding implements Bindings {
   @override
@@ -9,6 +10,7 @@ class RootBinding implements Bindings {
     // Controllers
     Get.lazyPut<BaseController>(() => BaseController(), fenix: true);
     Get.lazyPut<LoginController>(() => LoginController(), fenix: true);
-    Get.lazyPut<SignInController>(() => SignInController(), fenix: true);
+    Get.lazyPut<MainController>(() => MainController(), fenix: true);
+    Get.lazyPut<SplashController>(() => SplashController(), fenix: true);
   }
 }

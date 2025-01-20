@@ -12,6 +12,7 @@ dependencies:
   equatable: ^2.0.7
   flutter:
     sdk: flutter
+  flutter_screenutil: ^5.9.3
   get: ^4.6.6
   get_storage: ^2.1.1
   http_interceptor: ^2.0.0
@@ -24,5 +25,25 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  assets:
+    - assets/images/
+    - assets/vectors/
+    - assets/animations/
+
+  fonts:
+    - family: SF-Pro
+      fonts:
+        - asset: assets/fonts/SF-Pro-Rounded-Regular.otf
+          weight: 400
+          style: normal
+        - asset: assets/fonts/SF-Pro-Rounded-Semibold.otf
+          weight: 500
+          style: normal
+        - asset: assets/fonts/SF-Pro-Rounded-Bold.otf
+          weight: 600
+          style: normal
+        - asset: assets/fonts/SF-Pro-Rounded-Heavy.otf
+          weight: 700
+          style: normal
 
   uses-material-design: true
