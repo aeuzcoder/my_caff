@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:my_caff/feauture/presentation/controllers/base_controller.dart';
+import 'package:my_caff/feauture/presentation/controllers/food_controller.dart';
 import 'package:my_caff/feauture/presentation/controllers/home_controller.dart';
 import 'package:my_caff/feauture/presentation/controllers/login_controller.dart';
 import 'package:my_caff/feauture/presentation/controllers/main_controller.dart';
@@ -14,6 +15,7 @@ class RootBinding implements Bindings {
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
     Get.put<HomeController>(HomeController(), permanent: true);
     Get.lazyPut<LoginController>(() => LoginController(), fenix: true);
+    Get.lazyPut<FoodController>(() => FoodController(), fenix: true);
     Get.lazyPut<MainController>(() => MainController(), fenix: true);
     Get.lazyPut<SplashController>(() => SplashController(), fenix: true);
   }

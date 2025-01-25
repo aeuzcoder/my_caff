@@ -1,13 +1,13 @@
 import 'package:my_caff/feauture/domain/entites/category_entity.dart';
 
 class CategoryModel extends CategoryEntity {
-  const CategoryModel({
-    required super.name,
-    required super.description,
-    required super.image,
-    required super.addedDate,
-    required super.id,
-  });
+  const CategoryModel(
+      {required super.name,
+      required super.description,
+      required super.image,
+      required super.addedDate,
+      required super.id,
+      required super.productCount});
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
@@ -16,6 +16,7 @@ class CategoryModel extends CategoryEntity {
       image: json['image'],
       addedDate: json['added_date'],
       id: json['id'],
+      productCount: json['product_count'] ?? 0,
     );
   }
 
@@ -26,6 +27,7 @@ class CategoryModel extends CategoryEntity {
       'image': image,
       'added_date': addedDate,
       'id': id,
+      'product_count': productCount ?? 0,
     };
   }
 }

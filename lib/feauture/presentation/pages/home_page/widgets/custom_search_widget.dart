@@ -6,13 +6,15 @@ import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_svg.dart';
 
 class CustomSearchWidget extends StatelessWidget {
-  const CustomSearchWidget({super.key});
+  const CustomSearchWidget({super.key, required this.focusNode});
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: TextField(
+        focusNode: focusNode,
         style: TextStyle(
             fontSize: 18,
             color: AppColors.black,
