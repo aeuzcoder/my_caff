@@ -16,9 +16,9 @@ class SplashController extends BaseController {
 
   _callNextPage() {
     if (DBService.to.getAccessToken().isNotEmpty) {
-      Get.off(const MainPage());
+      Get.off(() => const MainPage());
     } else {
-      Get.off(const TutorialPage());
+      Get.off(() => const TutorialPage());
     }
   }
 }

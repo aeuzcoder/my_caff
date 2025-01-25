@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class AppColors {
   static const Color widgetColor = Color(0xFFFA4A0C);
   static const Color bgColor = Color(0xFFEDEDED);
+  static const Color searchColor = Color(0xFFE6DFDF);
+
   static const Color black = Color(0xFF000000);
   static const Color grey = Color(0xFF9A9A9D);
   static const Color red = Color(0xFFe73323);

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
 import 'package:my_caff/core/config/app_theme.dart';
 import 'package:my_caff/core/config/root_binding.dart';
 import 'package:my_caff/core/services/root_service.dart';
+import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/pages/favourite_page/favourite_page.dart';
 import 'package:my_caff/feauture/presentation/pages/history_page/history_page.dart';
 import 'package:my_caff/feauture/presentation/pages/home_page/home_page.dart';
@@ -11,10 +13,30 @@ import 'package:my_caff/feauture/presentation/pages/login_page/login_page.dart';
 import 'package:my_caff/feauture/presentation/pages/profile_page/profile_page.dart';
 import 'package:my_caff/feauture/presentation/pages/splash_page.dart';
 import 'package:my_caff/feauture/presentation/pages/tutorial_page.dart';
+import 'package:my_caff/service_locator.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  //DI
+  di.init();
+
+  //DB
   await RootService.init();
+
+  //For system colors
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Прозрачный цвет
+      statusBarIconBrightness:
+          Brightness.dark, // Темные иконки (для светлого фона)
+      systemNavigationBarColor:
+          AppColors.bgColor, // Прозрачный цвет для нижней панели
+      systemNavigationBarIconBrightness: Brightness.dark, // Темные иконки
+    ),
+  );
+
+  //APP
   runApp(MyApp());
 }
 

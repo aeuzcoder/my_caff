@@ -10,4 +10,10 @@ class MainController extends BaseController {
     currentIndex = index;
     update();
   }
+
+  @override
+  void onClose() {
+    pageController.dispose(); // Удаляем контроллер при закрытии
+    super.onClose();
+  }
 }

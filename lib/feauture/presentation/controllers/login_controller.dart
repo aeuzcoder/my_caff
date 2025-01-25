@@ -1,46 +1,77 @@
 import 'package:my_caff/feauture/data/datasources/database/db_service.dart';
-import 'package:my_caff/feauture/data/repo/user_repo_impl.dart';
 import 'package:my_caff/feauture/domain/entites/user_entity.dart';
 import 'package:my_caff/feauture/presentation/controllers/base_controller.dart';
 
 class LoginController extends BaseController {
-  final userRepo = UserRepoImpl();
+  bool isValide = false;
 
   int indexItem = 0;
 
-  void changer(int index) {
+  String? errorOnPassword;
+  @override
+  void onInit() {
+    super.onInit();
+    errorOnPassword = null;
+    update();
+  }
+
+  void noError() {
+    errorOnPassword = null;
+    update();
+  }
+
+  void changerItem(int index) {
     indexItem = index;
+    update();
+  }
+
+  void checkerValide(bool isValidate) {
+    isValide = isValidate;
     update();
   }
 
   Future<bool> onSignIn(
       {required String username, required String password}) async {
+    errorOnPassword = null;
     changeLoading(true);
     final res = await userRepo.signIn(username: username, password: password);
+
     if (res.isRight()) {
       var loginData = res.getOrElse(() => throw Exception("Unexpected error"));
+      if (loginData.details != null) {
+        errorOnPassword = loginData.details;
+        update();
+        changeLoading(false);
+        return false;
+      }
       if ((loginData.accessToken).isNotEmpty) {
         await DBService.to.setAccessToken(loginData.accessToken);
       }
+      changeLoading(false);
       return true;
     }
-    if (res.isLeft()) {
-      return false;
-    }
+    changeLoading(false);
     return false;
   }
 
-  Future<String> onSignUp({required UserEntity user}) async {
+  Future<bool> onSignUp({required UserEntity user}) async {
     changeLoading(true);
     final res = await userRepo.signUp(user: user);
     if (res.isRight()) {
       var loginData = res.getOrElse(() => throw Exception("Unexpected error"));
-      return loginData;
+
+      if (loginData == 'User yaratildi.') {
+        changeLoading(false);
+
+        return true;
+      } else {
+        changeLoading(false);
+
+        return false;
+      }
     }
-    if (res.isLeft()) {
-      var loginData = res.getOrElse(() => throw Exception("Unexpected error"));
-      return loginData;
-    }
-    return ' ERROR ';
+    changeLoading(false);
+
+    return false;
   }
 }

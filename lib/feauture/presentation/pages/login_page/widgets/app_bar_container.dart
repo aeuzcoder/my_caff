@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_caff/core/utils/app_assets.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 
-class AppBarContainer extends StatelessWidget implements PreferredSizeWidget {
+class AppBarContainer extends StatelessWidget {
   const AppBarContainer({
     super.key,
     required this.size,
@@ -106,7 +106,4 @@ class AppBarContainer extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(size);
 }

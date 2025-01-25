@@ -13,7 +13,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.3
+  flutter_svg: ^2.0.17
   get: ^4.6.6
+  get_it: ^8.0.3
   get_storage: ^2.1.1
   http_interceptor: ^2.0.0
   intl: ^0.20.1

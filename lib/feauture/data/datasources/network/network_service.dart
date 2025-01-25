@@ -21,7 +21,9 @@ class NetworkService {
   /* Http Requests */
   static Future<String?> GET(String api, Map<String, dynamic> params) async {
     try {
+      log('uri');
       var uri = Uri.https(getServer(), api, params);
+      log('URI: $uri');
       var response = await client.get(uri);
       if (response.statusCode == 200) {
         return response.body;
