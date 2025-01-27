@@ -20,6 +20,7 @@ class CategoryModel extends CategoryEntity {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'name': name,

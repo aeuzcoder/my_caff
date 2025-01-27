@@ -3,7 +3,9 @@
 class ApiConstants {
   static const String BASE_URL = 'mycaff.uz';
   static const String USERS_CREATE_USERS = '/users/create_user';
+  static const String ORDER_CREATE = '/order/create';
   static const String TOKEN = '/token';
   static const String PRODUCT_GET = '/product/get';
   static const String CATEGORY_GET = '/category/get';
+  static const String TABLE_GET = '/table/get';
 }

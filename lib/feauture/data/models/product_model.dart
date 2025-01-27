@@ -20,6 +20,26 @@ class ProductModel extends ProductEntity {
     required super.kcal,
     required super.category,
   });
+  static ProductModel fromEntity(ProductEntity entity) {
+    return ProductModel(
+      categoryId: entity.categoryId,
+      name: entity.name,
+      amount: entity.amount,
+      userId: entity.userId,
+      discountStart: entity.discountStart,
+      discountPrice: entity.discountPrice,
+      ratingCount: entity.ratingCount,
+      id: entity.id,
+      price: entity.price,
+      image: entity.image,
+      discount: entity.discount,
+      discountEnd: entity.discountEnd,
+      averageRating: entity.averageRating,
+      kcal: entity.kcal,
+      category:
+          entity.category, // Предполагаем, что category уже типа CategoryModel
+    );
+  }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
@@ -57,7 +77,7 @@ class ProductModel extends ProductEntity {
       'discount_end': discountEnd,
       'average_rating': averageRating,
       'kcal': kcal,
-      'category': category,
+      'category': category.toJson(),
     };
   }
 }

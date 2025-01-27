@@ -12,6 +12,7 @@ import 'package:my_caff/feauture/presentation/pages/history_page/history_page.da
 import 'package:my_caff/feauture/presentation/pages/home_page/home_page.dart';
 import 'package:my_caff/feauture/presentation/pages/login_page/login_page.dart';
 import 'package:my_caff/feauture/presentation/pages/main_page/main_page.dart';
+import 'package:my_caff/feauture/presentation/pages/order_page/order_page.dart';
 import 'package:my_caff/feauture/presentation/pages/profile_page/profile_page.dart';
 import 'package:my_caff/feauture/presentation/pages/splash_page.dart';
 import 'package:my_caff/feauture/presentation/pages/tutorial_page.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/login', page: () => LoginPage()),
             GetPage(name: '/splash', page: () => SplashPage()),
             GetPage(name: '/profile', page: () => ProfilePage()),
+            GetPage(name: '/order', page: () => OrderPage()),
             GetPage(
                 name: '/food',
                 page: () => FoodPage(),

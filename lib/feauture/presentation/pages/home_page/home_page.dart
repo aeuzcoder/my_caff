@@ -1,10 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_caff/core/utils/app_assets.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/controllers/home_controller.dart';
+import 'package:my_caff/feauture/presentation/pages/home_page/widgets/order_buttom_widget.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_app_bar_widget.dart';
 import 'package:my_caff/feauture/presentation/pages/home_page/widgets/custom_search_widget.dart';
 import 'package:my_caff/feauture/presentation/pages/home_page/widgets/food_container_widget.dart';
@@ -23,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _focusNode.unfocus();
+    log('init');
   }
 
   @override
@@ -40,12 +45,19 @@ class _HomePageState extends State<HomePage> {
           length: controller.categories.length,
           initialIndex: controller.indexCategory,
           child: Scaffold(
+            //FLOATING BUTTON
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: controller.priceAllProducts() != 0
+                ? OrderButtomWidget()
+                : SizedBox(),
             //APP BAR
             appBar: CustomAppBarWidget(
               leftIcon: AppAssets.icons.menu,
               leftSize: 18,
               rightIcon: AppAssets.icons.shop,
               rightSize: 24,
+              rightFunction: () => Get.toNamed('/order'),
             ),
 
             //BODY
@@ -71,66 +83,81 @@ class _HomePageState extends State<HomePage> {
                   CustomSearchWidget(
                     focusNode: _focusNode,
                   ),
+
                   //TAB BAR
-                  TabBar(
-                    dividerColor: AppColors.bgColor,
-                    labelColor: AppColors.widgetColor,
-                    indicatorColor: AppColors.widgetColor,
-                    isScrollable: true,
-                    labelPadding: EdgeInsets.symmetric(horizontal: 18),
-                    padding: EdgeInsets.symmetric(vertical: 12),
-                    unselectedLabelColor: AppColors.grey,
-                    labelStyle: TextStyle(fontSize: 16),
-                    unselectedLabelStyle: TextStyle(fontSize: 16),
-                    onTap: (value) {
-                      controller
-                          .changeCategory(controller.categories[value].id);
-                      controller.changeIndex(value);
-                    },
-                    overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                      (states) {
-                        if (states.contains(WidgetState.pressed)) {
-                          return AppColors.bgColor;
-                        }
-                        return null;
-                      },
-                    ),
-                    tabs: controller.categories
-                        .map((category) => Tab(
-                              text: category.name,
-                            ))
-                        .toList(),
-                  ),
+                  controller.isLoading
+                      ? SizedBox()
+                      : Column(
+                          children: [
+                            TabBar(
+                              dividerColor: AppColors.bgColor,
+                              labelColor: AppColors.widgetColor,
+                              indicatorColor: AppColors.widgetColor,
+                              isScrollable: true,
+                              labelPadding:
+                                  EdgeInsets.symmetric(horizontal: 18),
+                              padding: EdgeInsets.symmetric(vertical: 12),
+                              unselectedLabelColor: AppColors.grey,
+                              labelStyle: TextStyle(fontSize: 16),
+                              unselectedLabelStyle: TextStyle(fontSize: 16),
+                              onTap: (value) {
+                                controller.changeCategory(
+                                    controller.categories[value].id);
+                                controller.changeIndex(value);
+                              },
+                              overlayColor:
+                                  WidgetStateProperty.resolveWith<Color?>(
+                                (states) {
+                                  if (states.contains(WidgetState.pressed)) {
+                                    return AppColors.bgColor;
+                                  }
+                                  return null;
+                                },
+                              ),
+                              tabs: controller.categories
+                                  .map((category) => Tab(
+                                        text: category.name,
+                                      ))
+                                  .toList(),
+                            ),
 
-                  //BUILDER
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: GridView.builder(
-                      controller: ScrollController(),
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount:
-                          controller.categoryMap[controller.idCategory]?.length,
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Количество столбцов
-                        crossAxisSpacing: 12, // Пространство между столбцами
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 180 / 280,
-                        // Пространство между строками
-                      ),
-                      itemBuilder: (context, index) {
-                        final product = controller
-                            .categoryMap[controller.idCategory]![index];
-                        return FoodContainerWidget(
-                          product: product,
-                          isFavourite: false,
-                        );
-                      },
-                    ),
-                  ),
+                            //BUILDER
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: GridView.builder(
+                                controller: ScrollController(),
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: controller
+                                    .categoryMap[controller.idCategory]?.length,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, // Количество столбцов
+                                  crossAxisSpacing:
+                                      12, // Пространство между столбцами
+                                  mainAxisSpacing: 12,
+                                  childAspectRatio: 180 / 280,
+                                  // Пространство между строками
+                                ),
+                                itemBuilder: (context, index) {
+                                  if (controller.products.isEmpty) {
+                                    return SizedBox();
+                                  }
+                                  final product = controller
+                                          .categoryMap[controller.idCategory]
+                                      ?[index];
 
-                  SizedBox(height: 12),
+                                  return FoodContainerWidget(
+                                    product: product!,
+                                  );
+                                },
+                              ),
+                            ),
+
+                            SizedBox(height: 100.h),
+                          ],
+                        ),
                 ],
               ),
             ),

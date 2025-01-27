@@ -7,15 +7,89 @@ class HomeController extends BaseController {
   List<ProductEntity> products = [];
   List<CategoryEntity> categories = [];
   Map<int, List<ProductEntity>> categoryMap = {};
+  Map<int, int> order = {};
+  int changedFoodId = 0;
   int idCategory = 0;
   int indexCategory = 0;
+
   @override
   void onInit() async {
     super.onInit();
+    changeLoading(true);
     products = await getProducts(1);
+
     categories = await getCategories(1);
+
     idCategory = categories.first.id;
     categoryMap = filterProductsByCategory();
+    changeLoading(false);
+  }
+
+  int lengthOrder() {
+    int length = 0;
+    for (var values in order.values) {
+      length = length + values;
+    }
+    return length;
+  }
+
+  int lengthFood() {
+    int length = 0;
+    // ignore: unused_local_variable
+    for (var key in order.keys) {
+      length = length + 1;
+    }
+    return length;
+  }
+
+  int priceAllProducts() {
+    int summ = 0;
+    for (var entry in order.entries) {
+      for (var product in products) {
+        if (product.id == entry.key) {
+          summ = summ + product.price * entry.value;
+        }
+      }
+    }
+    return summ;
+  }
+
+  void decrement(int id) {
+    if (order[id]! > 0) {
+      order[id] = order[id]! - 1;
+
+      update();
+    }
+  }
+
+  void increment(int id) {
+    order[id] = order[id]! + 1;
+    update();
+  }
+
+  void addProduct(int id) {
+    if (order.containsKey(id)) {
+      order[id] = order[id]! + 1;
+    } else {
+      // Если ключа нет, добавляем его и устанавливаем значение равным 1
+      order[id] = 1;
+    }
+    update();
+  }
+
+  void deleteProduct(int id) {
+    if (order.containsKey(id)) {
+      if (order[id] == 0) {
+        return;
+      }
+      order[id] = order[id]! - 1;
+    }
+    update();
+  }
+
+  void changedId(int id) {
+    changedFoodId = id;
+    update();
   }
 
   void changeCategory(int id) {
@@ -29,22 +103,19 @@ class HomeController extends BaseController {
   }
 
   Future<List<CategoryEntity>> getCategories(int page) async {
-    changeLoading(true);
     var productsJson = await userRepo.getCategories(page: page);
     if (productsJson.isRight()) {
       var result = productsJson.getOrElse(() => throw ServerException());
-      changeLoading(false);
+
       return result;
     }
     return [];
   }
 
   Future<List<ProductEntity>> getProducts(int page) async {
-    changeLoading(true);
     var productsJson = await userRepo.getProducts(page: page);
     if (productsJson.isRight()) {
       var result = productsJson.getOrElse(() => throw ServerException());
-      changeLoading(false);
       return result;
     }
     return [];

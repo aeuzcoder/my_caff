@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:my_caff/feauture/domain/entites/category_entity.dart';
+import 'package:my_caff/feauture/domain/entites/order_entity.dart';
 import 'package:my_caff/feauture/domain/entites/product_entity.dart';
 import 'package:my_caff/feauture/domain/entites/sign_in_entity.dart';
+import 'package:my_caff/feauture/domain/entites/table_entity.dart';
 import 'package:my_caff/feauture/domain/entites/user_entity.dart';
 
 abstract class UserRepo {
@@ -18,4 +20,10 @@ abstract class UserRepo {
   //GET PRODUCTS
   Future<Either<String, List<CategoryEntity>>> getCategories(
       {required int page});
+
+  //SET ORDER
+  Future<Either<String, String>> setOrder({required OrderEntity order});
+
+  //GET TABLES
+  Future<Either<String, List<TableEntity>>> getTables();
 }

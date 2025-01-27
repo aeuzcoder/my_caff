@@ -8,10 +8,13 @@ import 'package:my_caff/feauture/data/datasources/network/network_service.dart';
 import 'package:my_caff/feauture/data/models/category_model.dart';
 import 'package:my_caff/feauture/data/models/product_model.dart';
 import 'package:my_caff/feauture/data/models/sign_in_model.dart';
+import 'package:my_caff/feauture/data/models/table_model.dart';
 import 'package:my_caff/feauture/data/models/user_model.dart';
 import 'package:my_caff/feauture/domain/entites/category_entity.dart';
+import 'package:my_caff/feauture/domain/entites/order_entity.dart';
 import 'package:my_caff/feauture/domain/entites/product_entity.dart';
 import 'package:my_caff/feauture/domain/entites/sign_in_entity.dart';
+import 'package:my_caff/feauture/domain/entites/table_entity.dart';
 import 'package:my_caff/feauture/domain/entites/user_entity.dart';
 import 'package:my_caff/feauture/domain/repo/user_repo.dart';
 
@@ -83,9 +86,37 @@ class UserRepoImpl implements UserRepo {
       var response = await NetworkService.GET(ApiConstants.CATEGORY_GET,
           {'page': page.toString(), 'page_size': 10.toString()});
       var resultJson = jsonDecode(response!);
-      log('Categoires: $resultJson');
       List<CategoryEntity> result = resultJson
           .map<CategoryEntity>((category) => CategoryModel.fromJson(category))
+          .toList();
+      return Right(result);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, String>> setOrder({required OrderEntity order}) async {
+    try {
+      var response = await NetworkService.POST(
+          ApiConstants.ORDER_CREATE, NetworkService.paramsEmpty());
+      var result = jsonDecode(response ?? '');
+      log("RESULT: $result");
+      return Right(result['message']);
+    } catch (e) {
+      log('EROR: ${e.toString()}');
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, List<TableEntity>>> getTables() async {
+    try {
+      var response = await NetworkService.GET(
+          ApiConstants.TABLE_GET, NetworkService.paramsEmpty());
+      var resultJson = jsonDecode(response!);
+      List<TableEntity> result = resultJson
+          .map<TableEntity>((table) => TableModel.fromJson(table))
           .toList();
       return Right(result);
     } catch (e) {
