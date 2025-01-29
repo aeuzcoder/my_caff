@@ -1,6 +1,11 @@
 // Model
 import 'package:my_caff/feauture/domain/entites/order_entity.dart';
 
+Map<String, dynamic> createOrderFromEntity(OrderEntity data) {
+  var model = OrderModel.convertToModel(data);
+  return model.toJson();
+}
+
 class OrderModel extends OrderEntity {
   OrderModel({
     required super.tableNumber,
@@ -12,58 +17,24 @@ class OrderModel extends OrderEntity {
     return OrderModel(
       tableNumber: json['table_number'],
       items: (json['items'] as List<dynamic>)
-          .map((item) => ItemModel.fromJson(item))
+          .map((item) => ItemEntity.fromJson(item))
           .toList(),
-      location: LocationModel.fromJson(json['location']),
+      location: LocationEntity.fromJson(json['location']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'table_number': tableNumber,
-      'items': items.map((item) => (item as ItemModel).toJson()).toList(),
-      'location': (location as LocationModel).toJson(),
+      'items': items.map((item) => (item).toJson()).toList(),
+      'location': (location).toJson(),
     };
   }
-}
 
-class ItemModel extends ItemEntity {
-  ItemModel({
-    required super.productId,
-    required super.quantity,
-  });
-
-  factory ItemModel.fromJson(Map<String, dynamic> json) {
-    return ItemModel(
-      productId: json['product_id'],
-      quantity: json['quantity'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'product_id': productId,
-      'quantity': quantity,
-    };
-  }
-}
-
-class LocationModel extends LocationEntity {
-  LocationModel({
-    required super.latitude,
-    required super.longitude,
-  });
-  factory LocationModel.fromJson(Map<String, dynamic> json) {
-    return LocationModel(
-      latitude: json['latitude'],
-      longitude: json['longitude'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'latitude': latitude,
-      'longitude': longitude,
-    };
+  static OrderModel convertToModel(OrderEntity entity) {
+    return OrderModel(
+        tableNumber: entity.tableNumber,
+        items: entity.items,
+        location: entity.location);
   }
 }

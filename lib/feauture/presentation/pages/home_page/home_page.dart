@@ -54,9 +54,9 @@ class _HomePageState extends State<HomePage> {
             //APP BAR
             appBar: CustomAppBarWidget(
               leftIcon: AppAssets.icons.menu,
-              leftSize: 18,
+              leftSize: 20.w,
               rightIcon: AppAssets.icons.shop,
-              rightSize: 24,
+              rightSize: 20.w,
               rightFunction: () => Get.toNamed('/order'),
             ),
 
@@ -67,15 +67,16 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   //MAZZALI
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 32.0, vertical: 20),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 32.0.w, vertical: 20.h),
                     child: Text(
                       'Mazzali Taomlar\nsiz uchun',
                       style: TextStyle(
-                          height: 1.2,
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.black),
+                        height: 1,
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.black,
+                      ),
                     ),
                   ),
 
@@ -95,11 +96,13 @@ class _HomePageState extends State<HomePage> {
                               indicatorColor: AppColors.widgetColor,
                               isScrollable: true,
                               labelPadding:
-                                  EdgeInsets.symmetric(horizontal: 18),
-                              padding: EdgeInsets.symmetric(vertical: 12),
+                                  EdgeInsets.symmetric(horizontal: 18.w),
+                              padding: EdgeInsets.symmetric(vertical: 12.h),
                               unselectedLabelColor: AppColors.grey,
-                              labelStyle: TextStyle(fontSize: 16),
-                              unselectedLabelStyle: TextStyle(fontSize: 16),
+                              labelStyle: TextStyle(
+                                  fontSize: 14.sp, fontWeight: FontWeight.bold),
+                              unselectedLabelStyle: TextStyle(
+                                  fontSize: 14.sp, fontWeight: FontWeight.bold),
                               onTap: (value) {
                                 controller.changeCategory(
                                     controller.categories[value].id);
@@ -123,8 +126,7 @@ class _HomePageState extends State<HomePage> {
 
                             //BUILDER
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              padding: EdgeInsets.symmetric(horizontal: 20.0.h),
                               child: GridView.builder(
                                 controller: ScrollController(),
                                 physics: NeverScrollableScrollPhysics(),
@@ -132,12 +134,12 @@ class _HomePageState extends State<HomePage> {
                                     .categoryMap[controller.idCategory]?.length,
                                 shrinkWrap: true,
                                 gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                    SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2, // Количество столбцов
                                   crossAxisSpacing:
-                                      12, // Пространство между столбцами
-                                  mainAxisSpacing: 12,
-                                  childAspectRatio: 180 / 280,
+                                      10.w, // Пространство между столбцами
+                                  mainAxisSpacing: 12.h,
+                                  childAspectRatio: 180.w / 280.h,
                                   // Пространство между строками
                                 ),
                                 itemBuilder: (context, index) {

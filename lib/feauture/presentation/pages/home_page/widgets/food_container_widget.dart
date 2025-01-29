@@ -34,13 +34,13 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
           Get.toNamed('/food', arguments: widget.product);
         },
         child: Container(
-          width: 186,
-          height: 280,
+          width: 180.w,
+          height: 280.h,
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16.r),
           ),
-          padding: EdgeInsets.all(12),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -50,8 +50,8 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                 children: [
                   Spacer(),
                   Container(
-                    width: 24,
-                    height: 24,
+                    width: 24.w,
+                    height: 24.h,
                     decoration: BoxDecoration(
                       color: AppColors.white,
                     ),
@@ -67,26 +67,26 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                       child: Center(
                         child: isFavourite
                             ? Icon(
-                                size: 24,
+                                size: 24.w,
                                 Icons.favorite,
                                 color: AppColors.red,
                                 shadows: [
                                   BoxShadow(
                                     color: AppColors.grey.withOpacity(0.8),
                                     offset: Offset(0, 1.5),
-                                    blurRadius: 4,
+                                    blurRadius: 4.r,
                                   ),
                                 ],
                               )
                             : Icon(
-                                size: 24,
+                                size: 24.w,
                                 Icons.favorite_border,
                                 color: AppColors.red,
                                 shadows: [
                                   BoxShadow(
                                     color: AppColors.grey.withOpacity(0.8),
                                     offset: Offset(0, 1.5),
-                                    blurRadius: 4,
+                                    blurRadius: 4.r,
                                   ),
                                 ],
                               ),
@@ -101,29 +101,29 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                 url: AppFunctions.imageUrl(
                   widget.product.image,
                 ),
-                w: 150,
-                h: 150,
+                w: 124.w,
+                h: 124.h,
               ),
               SizedBox(
-                height: 12,
+                height: 12.h,
               ),
               //NAME
               SizedBox(
-                width: 200,
+                width: 192.w,
                 child: Text(
                   widget.product.name,
                   maxLines: 2,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 18,
+                    height: 1,
+                    fontSize: 16.sp,
                     shadows: [
                       BoxShadow(
                         color: AppColors.grey.withOpacity(0.8),
                         offset: Offset(0, 1.5),
-                        blurRadius: 4,
+                        blurRadius: 4.r,
                       ),
                     ],
-                    height: 1,
                     color: AppColors.black,
                     fontWeight: FontWeight.w600,
                   ),
@@ -136,14 +136,15 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                     BoxShadow(
                       color: AppColors.grey.withOpacity(0.8),
                       offset: Offset(0, 1.5),
-                      blurRadius: 4,
+                      blurRadius: 4.r,
                     ),
                   ],
                   color: AppColors.black,
                   fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
                 ),
               ),
-              Spacer(),
+              SizedBox(height: 12.h),
 
               //ROW ADD AND PRICE
 
@@ -157,20 +158,20 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                   } else {}
                 },
                 child: Container(
-                  height: 26.h,
+                  height: 24.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.grey.withOpacity(0.8),
                         offset: Offset(0, 2),
-                        blurRadius: 4,
+                        blurRadius: 4.r,
                       ),
                     ],
-                    color: AppColors.red,
+                    color: AppColors.widgetColor,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Row(
                       mainAxisAlignment: count == 0
                           ? MainAxisAlignment.center
@@ -185,10 +186,14 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                                         .deleteProduct(widget.product.id);
                                   });
                                 },
-                                child: Icon(
-                                  size: 24,
-                                  Icons.remove,
-                                  color: AppColors.white,
+                                child: Container(
+                                  width: 40.w,
+                                  color: AppColors.widgetColor,
+                                  child: Icon(
+                                    size: 24.w,
+                                    Icons.remove,
+                                    color: AppColors.white,
+                                  ),
                                 ),
                               )
                             : SizedBox(),
@@ -198,7 +203,7 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.white,
-                                    fontSize: 16),
+                                    fontSize: 14.sp),
                               )
                             : SizedBox(),
                         GestureDetector(
@@ -209,10 +214,14 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                             controller.controllerH
                                 .addProduct(widget.product.id);
                           },
-                          child: Icon(
-                            size: 24,
-                            Icons.add,
-                            color: AppColors.white,
+                          child: Container(
+                            width: 40.w,
+                            color: AppColors.widgetColor,
+                            child: Icon(
+                              size: 24.w,
+                              Icons.add,
+                              color: AppColors.white,
+                            ),
                           ),
                         )
                       ],

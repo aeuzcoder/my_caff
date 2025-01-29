@@ -71,7 +71,6 @@ class HomeController extends BaseController {
     if (order.containsKey(id)) {
       order[id] = order[id]! + 1;
     } else {
-      // Если ключа нет, добавляем его и устанавливаем значение равным 1
       order[id] = 1;
     }
     update();

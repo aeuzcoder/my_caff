@@ -59,14 +59,14 @@ class MyApp extends StatelessWidget {
           scrollBehavior: const ScrollBehavior().copyWith(
               overscroll: false, physics: const ClampingScrollPhysics()),
           initialBinding: RootBinding(),
-          defaultTransition: Transition.circularReveal,
-          transitionDuration: const Duration(milliseconds: 120),
+          defaultTransition: Transition.native,
+          transitionDuration: const Duration(milliseconds: 100),
           getPages: [
             GetPage(name: '/home', page: () => HomePage()),
             GetPage(
-                name: '/main',
-                page: () => MainPage(),
-                transition: Transition.circularReveal),
+              name: '/main',
+              page: () => MainPage(),
+            ),
             GetPage(name: '/history', page: () => HistoryPage()),
             GetPage(name: '/favourite', page: () => FavouritePage()),
             GetPage(name: '/tutorial', page: () => TutorialPage()),
@@ -75,9 +75,9 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/profile', page: () => ProfilePage()),
             GetPage(name: '/order', page: () => OrderPage()),
             GetPage(
-                name: '/food',
-                page: () => FoodPage(),
-                transition: Transition.circularReveal),
+              name: '/food',
+              page: () => FoodPage(),
+            ),
           ],
           initialRoute: '/splash',
         );

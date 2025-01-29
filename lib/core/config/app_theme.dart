@@ -20,7 +20,7 @@ class AppTheme {
           fontFamily: _sfpro,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.2,
-          color: AppColors.white,
+          color: AppColors.black,
         ),
         centerTitle: true,
         iconTheme: IconThemeData(size: 20.r, color: Colors.white),

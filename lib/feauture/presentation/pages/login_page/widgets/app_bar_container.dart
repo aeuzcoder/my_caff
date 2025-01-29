@@ -1,107 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_caff/core/utils/app_assets.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 
 class AppBarContainer extends StatelessWidget {
   const AppBarContainer({
     super.key,
-    required this.size,
     required this.index,
-    required this.onSignUpPressed,
-    required this.onSignInPressed,
+    required this.function,
   });
 
-  final double size;
   final int index;
-  final VoidCallback onSignUpPressed;
-  final VoidCallback onSignInPressed;
+  final Function(int) function;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: size,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        color: AppColors.white,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Spacer(),
-          Center(
-            child: Image.asset(
-              AppAssets.images.logo,
-              width: 120,
-              height: 120,
-            ),
-          ),
-          Spacer(),
-          Row(
-            children: [
-              _buildTabButton(
-                label: 'Sign In',
-                isSelected: index == 0,
-                onPressed: onSignInPressed,
-              ),
-              _buildTabButton(
-                label: 'Sign Up',
-                isSelected: index == 1,
-                onPressed: onSignUpPressed,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Вспомогательный метод для создания кнопки вкладки
-  Widget _buildTabButton({
-    required String label,
-    required bool isSelected,
-    required VoidCallback onPressed,
-  }) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(24),
-              bottomRight: Radius.circular(24),
-            ),
-            color: AppColors.white,
-          ),
-          height: 40,
-          child: Column(
-            children: [
-              Center(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    color: AppColors.black,
-                  ),
+    return DefaultTabController(
+      length: 2,
+      initialIndex: 0,
+      child: Container(
+        height: ScreenUtil().screenHeight / 3,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r),
+          color: AppColors.bgColor,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Spacer(),
+            Center(
+              child: ClipOval(
+                child: Image.asset(
+                  AppAssets.images.logo,
+                  width: 120.w,
+                  height: 120.h,
                 ),
               ),
-              Spacer(),
-              isSelected
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: Container(
-                        height: 3,
-                        decoration: BoxDecoration(
-                          color: AppColors.widgetColor,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    )
-                  : SizedBox(height: 3),
-            ],
-          ),
+            ),
+            Spacer(),
+            TabBar(
+              indicatorColor: AppColors.widgetColor,
+              indicatorWeight: 4,
+              padding: EdgeInsets.only(left: 4.w, right: 16.w),
+              onTap: (value) => function(value),
+              tabs: [
+                Tab(
+                  child: Text(
+                    '      Kirish      ',
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Ro\'yhatdan o\'tish',
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );

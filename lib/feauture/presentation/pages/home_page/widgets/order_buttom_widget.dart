@@ -15,7 +15,7 @@ class OrderButtomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (controller) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0.w),
         child: GestureDetector(
           onTap: () => Get.toNamed('order'),
           child: Container(
@@ -24,13 +24,13 @@ class OrderButtomWidget extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                     color: AppColors.grey.withOpacity(0.8),
-                    blurRadius: 4,
+                    blurRadius: 4.r,
                     offset: Offset(0, 2))
               ],
               borderRadius: BorderRadius.circular(20),
               color: AppColors.widgetColor,
             ),
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(8.r),
             child: Row(
               children: [
                 SizedBox(

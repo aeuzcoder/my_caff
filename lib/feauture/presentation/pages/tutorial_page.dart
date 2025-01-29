@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/pages/login_page/login_page.dart';
 
@@ -12,34 +13,39 @@ class TutorialPage extends StatelessWidget {
       backgroundColor: AppColors.widgetColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 40,
+          padding: EdgeInsets.symmetric(
+            vertical: 40.h,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                padding: EdgeInsets.symmetric(horizontal: 48.0.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //LOGO
                     Container(
-                      padding: const EdgeInsets.all(8),
-                      width: 80,
-                      height: 80,
+                      padding: EdgeInsets.all(8.r),
+                      width: 80.w,
+                      height: 80.h,
                       decoration: const BoxDecoration(
                         color: AppColors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset('assets/images/logo.png'),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/logo.jpg',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
 
                     //HAMMAGA BURGER
-                    const SizedBox(
-                      height: 200,
+                    SizedBox(
+                      height: 144.h,
                       child: Padding(
-                        padding: EdgeInsets.all(12.0),
+                        padding: EdgeInsets.all(12.0.r),
                         child: FittedBox(
                           child: Text(
                             'My Caff',
@@ -79,7 +85,7 @@ class TutorialPage extends StatelessWidget {
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 44),
+                          padding: EdgeInsets.symmetric(horizontal: 44.h),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -88,19 +94,19 @@ class TutorialPage extends StatelessWidget {
                                       builder: (context) => const LoginPage()));
                             },
                             child: Container(
-                              height: 64,
+                              height: 64.h,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28),
+                                borderRadius: BorderRadius.circular(28.r),
                                 color: AppColors.white,
                               ),
-                              child: const Center(
+                              child: Center(
                                 child: Text(
                                   'Davom etish',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.widgetColor,
-                                      fontSize: 16),
+                                      fontSize: 18.sp),
                                 ),
                               ),
                             ),

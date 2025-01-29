@@ -3,21 +3,29 @@ import 'package:flutter/widgets.dart';
 
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/pages/login_page/widgets/text_field_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignInWidget extends StatefulWidget {
   const SignInWidget({
     super.key,
     required this.usernameCtr,
     required this.passwordCtr,
+    required this.usernameFocusNode,
+    required this.passwordFocusNode,
   });
+
   final TextEditingController usernameCtr;
   final TextEditingController passwordCtr;
 
+  final FocusNode usernameFocusNode;
+  final FocusNode passwordFocusNode;
   @override
   State<SignInWidget> createState() => _SignInWidgetState();
 }
 
 class _SignInWidgetState extends State<SignInWidget> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -29,32 +37,31 @@ class _SignInWidgetState extends State<SignInWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      padding: EdgeInsets.symmetric(horizontal: 40.0.w),
       child: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 50),
+            SizedBox(height: 20.h),
             TextFieldWidget(
               title: 'Username',
               controller: widget.usernameCtr,
               isUsername: true,
+              focusNode: widget.usernameFocusNode,
             ),
-            SizedBox(
-              height: 40,
-            ),
+            SizedBox(height: 24.h),
             TextFieldWidget(
               title: 'Password',
               controller: widget.passwordCtr,
               isPassword: true,
+              focusNode: widget.passwordFocusNode,
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20.h),
             Text(
-              'Forgot passcode?',
+              'Parolni unutdingizmi?',
               style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14.sp,
                   color: AppColors.widgetColor,
                   fontWeight: FontWeight.w600),
             ),

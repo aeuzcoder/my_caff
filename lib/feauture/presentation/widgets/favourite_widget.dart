@@ -22,16 +22,16 @@ class FavouriteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12, right: 16, left: 16),
+      padding: EdgeInsets.only(top: 12.w, right: 16.h, left: 16.h),
       child: Container(
         height: 100.h,
         decoration: BoxDecoration(
           color: AppColors.white,
           boxShadow: [
-            BoxShadow(blurRadius: 4, color: AppColors.grey.withOpacity(0.8))
+            BoxShadow(blurRadius: 4.r, color: AppColors.grey.withOpacity(0.8))
           ],
           borderRadius: BorderRadius.circular(
-            16,
+            16.r,
           ),
         ),
 
@@ -62,7 +62,7 @@ class FavouriteWidget extends StatelessWidget {
                       style: TextStyle(
                           height: 1,
                           color: AppColors.black,
-                          fontSize: 24.sp,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.w600,
                           shadows: [
                             BoxShadow(
@@ -78,16 +78,15 @@ class FavouriteWidget extends StatelessWidget {
 
                 //PRICE
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     price == null
                         ? '${AppFunctions.formattingPrice(product.price)} so\'m'
                         : '${AppFunctions.formattingPrice(price!.toInt())} so\'m',
-                    maxLines: 2,
                     style: TextStyle(
                         height: 1,
                         color: AppColors.widgetColor,
-                        fontSize: 20.sp,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
                         shadows: [
                           BoxShadow(

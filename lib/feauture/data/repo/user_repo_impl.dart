@@ -6,12 +6,15 @@ import 'package:my_caff/core/errors/exception.dart';
 import 'package:my_caff/core/network/api_constants.dart';
 import 'package:my_caff/feauture/data/datasources/network/network_service.dart';
 import 'package:my_caff/feauture/data/models/category_model.dart';
+import 'package:my_caff/feauture/data/models/order_model.dart';
+import 'package:my_caff/feauture/data/models/person_model.dart';
 import 'package:my_caff/feauture/data/models/product_model.dart';
 import 'package:my_caff/feauture/data/models/sign_in_model.dart';
 import 'package:my_caff/feauture/data/models/table_model.dart';
 import 'package:my_caff/feauture/data/models/user_model.dart';
 import 'package:my_caff/feauture/domain/entites/category_entity.dart';
 import 'package:my_caff/feauture/domain/entites/order_entity.dart';
+import 'package:my_caff/feauture/domain/entites/person_entity.dart';
 import 'package:my_caff/feauture/domain/entites/product_entity.dart';
 import 'package:my_caff/feauture/domain/entites/sign_in_entity.dart';
 import 'package:my_caff/feauture/domain/entites/table_entity.dart';
@@ -99,7 +102,7 @@ class UserRepoImpl implements UserRepo {
   Future<Either<String, String>> setOrder({required OrderEntity order}) async {
     try {
       var response = await NetworkService.POST(
-          ApiConstants.ORDER_CREATE, NetworkService.paramsEmpty());
+          ApiConstants.ORDER_CREATE, createOrderFromEntity(order));
       var result = jsonDecode(response ?? '');
       log("RESULT: $result");
       return Right(result['message']);
@@ -118,6 +121,20 @@ class UserRepoImpl implements UserRepo {
       List<TableEntity> result = resultJson
           .map<TableEntity>((table) => TableModel.fromJson(table))
           .toList();
+      return Right(result);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, PersonEntity>> getUser() async {
+    try {
+      var response = await NetworkService.GET(
+          ApiConstants.USERS_GET_OWN, NetworkService.paramsEmpty());
+      var resultJson = jsonDecode(response!);
+      PersonEntity result = PersonModel.fromJson(resultJson);
+
       return Right(result);
     } catch (e) {
       return Left(e.toString());

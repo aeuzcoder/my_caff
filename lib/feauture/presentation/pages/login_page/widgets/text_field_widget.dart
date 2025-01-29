@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/controllers/login_controller.dart';
@@ -11,17 +12,18 @@ class TextFieldWidget extends StatefulWidget {
   final bool isAddress;
   final bool isPassword;
   final TextEditingController controller;
+  final FocusNode focusNode;
 
-  const TextFieldWidget({
-    super.key,
-    required this.title,
-    required this.controller,
-    this.isName = false,
-    this.isUsername = false,
-    this.isEmail = false,
-    this.isAddress = false,
-    this.isPassword = false,
-  });
+  const TextFieldWidget(
+      {super.key,
+      required this.title,
+      required this.controller,
+      this.isName = false,
+      this.isUsername = false,
+      this.isEmail = false,
+      this.isAddress = false,
+      this.isPassword = false,
+      required this.focusNode});
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -33,33 +35,41 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   // Универсальная функция валидации
   String? validate(String value) {
+    // Удаляем пробелы в начале и конце строки
+    value = value.trim();
+
     if (widget.isName) {
       if (value.isEmpty) return 'Имя не должно быть пустым';
       if (!RegExp(r'^[a-zA-Zа-яА-Я]+$').hasMatch(value)) {
         return 'Имя должно содержать только буквы';
       }
     }
+
     if (widget.isUsername) {
       if (value.isEmpty) return 'Имя пользователя не должно быть пустым';
       if (value.contains(' ')) {
         return 'Имя пользователя не должно содержать пробелов';
       }
     }
+
     if (widget.isEmail) {
       if (value.isEmpty) return 'Email не должен быть пустым';
       if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(value)) {
         return 'Введите корректный Email';
       }
     }
+
     if (widget.isAddress) {
       if (value.isEmpty) return 'Адрес не должен быть пустым';
     }
+
     if (widget.isPassword) {
       if (value.isEmpty) return 'Пароль не должен быть пустым';
       if (value.length < 6) {
         return 'Пароль должен содержать не менее 6 символов';
       }
     }
+
     return null; // Нет ошибок
   }
 
@@ -70,26 +80,25 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.title,
-          style: TextStyle(
-            fontSize: 16,
-            color: AppColors.blvk03,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
         TextFormField(
+          focusNode: widget.focusNode,
           onTapOutside: (tab) => FocusScope.of(context).unfocus(),
           controller: widget.controller,
           decoration: InputDecoration(
+            labelText: widget.title,
+            labelStyle: TextStyle(
+              color: AppColors.blvk02,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+            ),
             errorText: errorMessage,
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: AppColors.blvk01),
             ),
           ),
-          style: const TextStyle(
+          style: TextStyle(
             decorationColor: AppColors.bgColor,
-            fontSize: 18,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: Colors.black,
           ),

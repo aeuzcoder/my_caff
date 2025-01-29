@@ -19,7 +19,7 @@ class ImageContainerWidget extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: AppColors.grey,
-            offset: Offset(0, 4),
+            offset: Offset(0, 2),
             blurRadius: 4,
           ),
         ],

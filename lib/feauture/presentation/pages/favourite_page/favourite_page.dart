@@ -19,8 +19,11 @@ class FavouritePage extends StatelessWidget {
       if (controller.products.isEmpty) {
         return Center(
           child: Text(
-            'NO DATA',
-            style: TextStyle(color: AppColors.red, fontSize: 28),
+            'Ovqat tanlanmangan',
+            style: TextStyle(
+                color: AppColors.red,
+                fontSize: 24,
+                fontWeight: FontWeight.w600),
           ),
         );
       } else {

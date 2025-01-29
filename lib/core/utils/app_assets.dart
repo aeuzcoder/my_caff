@@ -26,7 +26,7 @@ class AppIcons {
 class AppImages {
   const AppImages();
 
-  final String logo = 'assets/images/logo.png';
+  final String logo = 'assets/images/logo.jpg';
   final String man = 'assets/images/man.png';
   final String woman = 'assets/images/women.png';
 }

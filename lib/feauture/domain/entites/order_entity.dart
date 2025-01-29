@@ -19,6 +19,20 @@ class ItemEntity {
     required this.productId,
     required this.quantity,
   });
+
+  factory ItemEntity.fromJson(Map<String, dynamic> json) {
+    return ItemEntity(
+      productId: json['product_id'],
+      quantity: json['quantity'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'product_id': productId,
+      'quantity': quantity,
+    };
+  }
 }
 
 class LocationEntity {
@@ -29,4 +43,17 @@ class LocationEntity {
     required this.latitude,
     required this.longitude,
   });
+  factory LocationEntity.fromJson(Map<String, dynamic> json) {
+    return LocationEntity(
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+  }
 }

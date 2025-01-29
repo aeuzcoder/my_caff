@@ -8,4 +8,5 @@ class ApiConstants {
   static const String PRODUCT_GET = '/product/get';
   static const String CATEGORY_GET = '/category/get';
   static const String TABLE_GET = '/table/get';
+  static const String USERS_GET_OWN = '/users/get_own';
 }
