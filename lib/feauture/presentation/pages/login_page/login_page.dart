@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                       }
                     },
                     child: Container(
-                      height: 60.h,
+                      height: 52.h,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.r),

@@ -186,13 +186,15 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                                         .deleteProduct(widget.product.id);
                                   });
                                 },
-                                child: Container(
-                                  width: 40.w,
-                                  color: AppColors.widgetColor,
-                                  child: Icon(
-                                    size: 24.w,
-                                    Icons.remove,
-                                    color: AppColors.white,
+                                child: Center(
+                                  child: Container(
+                                    width: 40.w,
+                                    color: AppColors.widgetColor,
+                                    child: Icon(
+                                      size: 20.w,
+                                      Icons.remove,
+                                      color: AppColors.white,
+                                    ),
                                   ),
                                 ),
                               )
@@ -214,13 +216,15 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                             controller.controllerH
                                 .addProduct(widget.product.id);
                           },
-                          child: Container(
-                            width: 40.w,
-                            color: AppColors.widgetColor,
-                            child: Icon(
-                              size: 24.w,
-                              Icons.add,
-                              color: AppColors.white,
+                          child: Center(
+                            child: Container(
+                              width: 40.w,
+                              color: AppColors.widgetColor,
+                              child: Icon(
+                                size: 20.w,
+                                Icons.add,
+                                color: AppColors.white,
+                              ),
                             ),
                           ),
                         )

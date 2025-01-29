@@ -16,47 +16,47 @@ class FavouritePage extends StatelessWidget {
           child: CircularProgressIndicator(),
         );
       }
-      if (controller.products.isEmpty) {
-        return Center(
-          child: Text(
-            'Ovqat tanlanmangan',
-            style: TextStyle(
-                color: AppColors.red,
-                fontSize: 24,
-                fontWeight: FontWeight.w600),
-          ),
-        );
-      } else {
-        return Container(
-          color: AppColors.bgColor,
-          child: SafeArea(
-            child: Scaffold(
-              appBar: CustomAppBarWidget(
-                title: 'Favourite Foods',
-                leftIcon: null,
-                rightIcon: null,
-                leftSize: 28,
-                rightSize: 0,
-              ),
-              body: Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.products.length,
-                    itemBuilder: (context, index) {
-                      final product = controller.products[index];
-                      return FavouriteWidget(
-                        product: product,
-                        function: () => controller.deleteFavouirite(product),
-                      );
-                    },
-                  ),
-                ],
-              ),
+
+      return Container(
+        color: AppColors.bgColor,
+        child: SafeArea(
+          child: Scaffold(
+            appBar: CustomAppBarWidget(
+              title: 'Favourite Foods',
+              leftIcon: null,
+              rightIcon: null,
+              leftSize: 28,
+              rightSize: 0,
             ),
+            body: controller.products.isEmpty
+                ? Center(
+                    child: Text(
+                      'Ovqat tanlanmangan',
+                      style: TextStyle(
+                          color: AppColors.red,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.products.length,
+                        itemBuilder: (context, index) {
+                          final product = controller.products[index];
+                          return FavouriteWidget(
+                            product: product,
+                            function: () =>
+                                controller.deleteFavouirite(product),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
           ),
-        );
-      }
+        ),
+      );
     });
   }
 }

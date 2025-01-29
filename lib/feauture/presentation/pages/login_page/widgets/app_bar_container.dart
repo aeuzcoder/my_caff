@@ -34,8 +34,8 @@ class AppBarContainer extends StatelessWidget {
               child: ClipOval(
                 child: Image.asset(
                   AppAssets.images.logo,
-                  width: 120.w,
-                  height: 120.h,
+                  width: 120,
+                  height: 120,
                 ),
               ),
             ),

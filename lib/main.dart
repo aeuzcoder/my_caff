@@ -21,7 +21,7 @@ import 'package:my_caff/service_locator.dart' as di;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  //DI
+  //Ddfbksdfbksdfbksdhfbkdsfbk
   di.init();
 
   //DB
