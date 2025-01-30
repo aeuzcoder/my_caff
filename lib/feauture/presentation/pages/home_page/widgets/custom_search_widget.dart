@@ -1,9 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:my_caff/core/utils/app_assets.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
+import 'package:my_caff/feauture/presentation/controllers/home_controller.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_svg.dart';
 
 class CustomSearchWidget extends StatelessWidget {
@@ -12,9 +16,20 @@ class CustomSearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controllerH = Get.find<HomeController>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 32.w),
-      child: TextField(
+      child: TextFormField(
+        onTapOutside: (tab) => FocusScope.of(context).unfocus(),
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            controllerH.changeSearch(true);
+            controllerH.searchProducts(value);
+            log('Maxsulotlar: ${controllerH.resultSearch}');
+          } else {
+            controllerH.changeSearch(false);
+          }
+        },
         focusNode: focusNode,
         style: TextStyle(
             fontSize: 16.sp,

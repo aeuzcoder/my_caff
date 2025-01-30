@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:my_caff/core/errors/exception.dart';
 import 'package:my_caff/feauture/domain/entites/category_entity.dart';
 import 'package:my_caff/feauture/domain/entites/product_entity.dart';
@@ -6,11 +9,20 @@ import 'package:my_caff/feauture/presentation/controllers/base_controller.dart';
 class HomeController extends BaseController {
   List<ProductEntity> products = [];
   List<CategoryEntity> categories = [];
+  List<ProductEntity> resultSearch = [];
   Map<int, List<ProductEntity>> categoryMap = {};
   Map<int, int> order = {};
   int changedFoodId = 0;
   int idCategory = 0;
   int indexCategory = 0;
+  bool isSearched = false;
+  final FocusNode searchFocus = FocusNode();
+
+  @override
+  void onClose() {
+    super.onClose();
+    searchFocus.dispose();
+  }
 
   @override
   void onInit() async {
@@ -40,6 +52,34 @@ class HomeController extends BaseController {
       length = length + 1;
     }
     return length;
+  }
+
+  void unfocusSearch() {
+    searchFocus.unfocus();
+    log('unfocus');
+    update();
+  }
+
+  void changeSearch(bool search) {
+    isSearched = search;
+    if (!search) {
+      resultSearch.clear();
+    }
+    update();
+  }
+
+  void clearOrder() {
+    order.clear();
+    update();
+  }
+
+  void searchProducts(String query) {
+    resultSearch.clear();
+    resultSearch = products
+        .where((product) =>
+            product.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    update();
   }
 
   int priceAllProducts() {

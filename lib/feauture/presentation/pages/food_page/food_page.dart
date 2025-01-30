@@ -25,6 +25,7 @@ class FoodPage extends StatelessWidget {
                   leftIcon: AppAssets.icons.left,
                   leftSize: 32,
                   leftFunction: () {
+                    controller.controllerH.unfocusSearch();
                     controller.foodWidgetController.update();
                     Get.back();
                   },

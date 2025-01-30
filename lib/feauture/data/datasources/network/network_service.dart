@@ -8,6 +8,7 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'package:my_caff/core/errors/exception.dart';
 import 'package:my_caff/core/network/api_constants.dart';
 import 'package:my_caff/feauture/data/datasources/network/network_helper.dart';
+import 'package:http/http.dart' as http;
 
 class NetworkService {
   static final client = InterceptedClient.build(
@@ -37,32 +38,61 @@ class NetworkService {
   }
 
   static Future<String?> POST(String api, Map<String, dynamic> params,
-      {bool isAuth = false}) async {
+      {bool isAuth = false, String? path}) async {
     try {
       var uri = Uri.https(getServer(), api);
 
-      String? body;
-      Map<String, String> headers = {};
+      // Если передан файл, используем MultipartRequest
+      if (path != null) {
+        var request = http.MultipartRequest('POST', uri);
 
-      if (isAuth) {
-        // Кодируем параметры для x-www-form-urlencoded
-        body = params.entries
-            .map((e) => '${e.key}=${Uri.encodeComponent(e.value)}')
-            .join('&');
-        headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        // Добавляем файл в запрос
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'file', // Название параметра для файла (зависит от API)
+            path,
+            filename: path.split('/').last,
+          ),
+        );
+
+        // Добавляем остальные параметры
+        params.forEach((key, value) {
+          request.fields[key] = value.toString();
+        });
+
+        // Используем http_interceptor
+        var streamedResponse = await client.send(request);
+        var response = await http.Response.fromStream(streamedResponse);
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          return response.body;
+        } else {
+          log(response.body);
+          _throwException(response);
+        }
       } else {
-        // Оставляем JSON по умолчанию
-        body = jsonEncode(params);
-        headers['Content-Type'] = 'application/json';
-      }
+        // Обычный POST-запрос
+        String? body;
+        Map<String, String> headers = {};
 
-      var response = await client.post(uri, body: body, headers: headers);
+        if (isAuth) {
+          body = params.entries
+              .map((e) => '${e.key}=${Uri.encodeComponent(e.value)}')
+              .join('&');
+          headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        } else {
+          body = jsonEncode(params);
+          headers['Content-Type'] = 'application/json';
+        }
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return response.body;
-      } else {
-        log(response.body.toString());
-        _throwException(response);
+        var response = await client.post(uri, body: body, headers: headers);
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          return response.body;
+        } else {
+          log(response.body.toString());
+          _throwException(response);
+        }
       }
     } on SocketException catch (_) {
       rethrow;

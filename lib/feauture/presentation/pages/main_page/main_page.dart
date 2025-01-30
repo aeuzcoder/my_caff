@@ -6,6 +6,7 @@ import 'package:my_caff/feauture/presentation/controllers/main_controller.dart';
 import 'package:my_caff/feauture/presentation/pages/favourite_page/favourite_page.dart';
 import 'package:my_caff/feauture/presentation/pages/history_page/history_page.dart';
 import 'package:my_caff/feauture/presentation/pages/home_page/home_page.dart';
+import 'package:my_caff/feauture/presentation/pages/home_page/widgets/order_buttom_widget.dart';
 import 'package:my_caff/feauture/presentation/pages/profile_page/profile_page.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_svg.dart';
 
@@ -21,6 +22,15 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return GetBuilder<MainController>(builder: (controller) {
       return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton:
+            controller.currentIndex != 2 && controller.currentIndex != 3
+                ? controller.controllerH.priceAllProducts() != 0
+                    ? !controller.controllerH.isSearched
+                        ? OrderButtomWidget()
+                        : SizedBox()
+                    : SizedBox()
+                : SizedBox(),
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: controller.pageController,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:my_caff/feauture/data/datasources/database/db_service.dart';
 import 'package:my_caff/feauture/domain/entites/product_entity.dart';
@@ -18,6 +16,7 @@ class FoodController extends BaseController {
   void onInit() async {
     super.onInit();
     changeLoading(true);
+
     product = await Get.arguments;
     counter = controllerH.order[product.id] ?? 0;
     isFavourite = DBService.to.hasDataOn(product.id);

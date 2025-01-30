@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/pages/login_page/widgets/text_field_widget.dart';
@@ -12,10 +13,12 @@ class SignInWidget extends StatefulWidget {
     required this.passwordCtr,
     required this.usernameFocusNode,
     required this.passwordFocusNode,
+    required this.controllerH,
   });
 
   final TextEditingController usernameCtr;
   final TextEditingController passwordCtr;
+  final GetxController controllerH;
 
   final FocusNode usernameFocusNode;
   final FocusNode passwordFocusNode;
@@ -49,6 +52,7 @@ class _SignInWidgetState extends State<SignInWidget> {
               controller: widget.usernameCtr,
               isUsername: true,
               focusNode: widget.usernameFocusNode,
+              controllerH: widget.controllerH,
             ),
             SizedBox(height: 24.h),
             TextFieldWidget(
@@ -56,6 +60,7 @@ class _SignInWidgetState extends State<SignInWidget> {
               controller: widget.passwordCtr,
               isPassword: true,
               focusNode: widget.passwordFocusNode,
+              controllerH: widget.controllerH,
             ),
             SizedBox(height: 20.h),
             Text(

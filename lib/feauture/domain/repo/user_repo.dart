@@ -30,4 +30,13 @@ abstract class UserRepo {
 
   //GET USER INFO
   Future<Either<String, PersonEntity>> getUser();
+
+  //SEND PHOTO
+  Future<Either<String, String>> sendPhoto({required String path});
+
+  //CHECK INTERNET
+  Future<bool> internetInfo();
+
+  //CHANGE PROFILE
+  Future<Either<String, String>> changeProfile({required UserEntity user});
 }

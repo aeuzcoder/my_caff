@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/controllers/login_controller.dart';
+import 'package:my_caff/feauture/presentation/controllers/profile_controller.dart';
 
 class TextFieldWidget extends StatefulWidget {
   final String title;
@@ -13,6 +14,7 @@ class TextFieldWidget extends StatefulWidget {
   final bool isPassword;
   final TextEditingController controller;
   final FocusNode focusNode;
+  final GetxController controllerH;
 
   const TextFieldWidget(
       {super.key,
@@ -23,7 +25,8 @@ class TextFieldWidget extends StatefulWidget {
       this.isEmail = false,
       this.isAddress = false,
       this.isPassword = false,
-      required this.focusNode});
+      required this.focusNode,
+      required this.controllerH});
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -31,7 +34,6 @@ class TextFieldWidget extends StatefulWidget {
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   String? errorMessage;
-  final controllerLogin = Get.find<LoginController>();
 
   // Универсальная функция валидации
   String? validate(String value) {
@@ -106,10 +108,24 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             // Обновляем состояние с ошибкой
             setState(() {
               errorMessage = validate(value);
-              if (errorMessage == null) {
-                controllerLogin.checkerValide(true);
-              } else {
-                controllerLogin.checkerValide(false);
+              if (widget.controllerH is LoginController) {
+                if (errorMessage == null) {
+                  ((widget.controllerH) as LoginController).checkerValide(true);
+                } else {
+                  ((widget.controllerH) as LoginController)
+                      .checkerValide(false);
+                }
+              }
+
+              if (widget.controllerH is ProfileController) {
+                ((widget.controllerH) as ProfileController).checkInitialState();
+                if (errorMessage == null) {
+                  ((widget.controllerH) as ProfileController)
+                      .checkerValide(true);
+                } else {
+                  ((widget.controllerH) as ProfileController)
+                      .checkerValide(false);
+                }
               }
             });
           },

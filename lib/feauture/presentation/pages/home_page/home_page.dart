@@ -1,14 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_caff/core/utils/app_assets.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/controllers/home_controller.dart';
-import 'package:my_caff/feauture/presentation/pages/home_page/widgets/order_buttom_widget.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_app_bar_widget.dart';
 import 'package:my_caff/feauture/presentation/pages/home_page/widgets/custom_search_widget.dart';
 import 'package:my_caff/feauture/presentation/pages/home_page/widgets/food_container_widget.dart';
@@ -21,22 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final FocusNode _focusNode = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode.unfocus();
-    log('init');
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    _focusNode.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (controller) {
@@ -46,11 +27,7 @@ class _HomePageState extends State<HomePage> {
           initialIndex: controller.indexCategory,
           child: Scaffold(
             //FLOATING BUTTON
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: controller.priceAllProducts() != 0
-                ? OrderButtomWidget()
-                : SizedBox(),
+
             //APP BAR
             appBar: CustomAppBarWidget(
               leftIcon: AppAssets.icons.menu,
@@ -82,84 +59,125 @@ class _HomePageState extends State<HomePage> {
 
                   //SEARCH
                   CustomSearchWidget(
-                    focusNode: _focusNode,
+                    focusNode: controller.searchFocus,
                   ),
 
-                  //TAB BAR
-                  controller.isLoading
-                      ? SizedBox()
-                      : Column(
-                          children: [
-                            TabBar(
-                              dividerColor: AppColors.bgColor,
-                              labelColor: AppColors.widgetColor,
-                              indicatorColor: AppColors.widgetColor,
-                              isScrollable: true,
-                              labelPadding:
-                                  EdgeInsets.symmetric(horizontal: 18.w),
-                              padding: EdgeInsets.symmetric(vertical: 12.h),
-                              unselectedLabelColor: AppColors.grey,
-                              labelStyle: TextStyle(
-                                  fontSize: 14.sp, fontWeight: FontWeight.bold),
-                              unselectedLabelStyle: TextStyle(
-                                  fontSize: 14.sp, fontWeight: FontWeight.bold),
-                              onTap: (value) {
-                                controller.changeCategory(
-                                    controller.categories[value].id);
-                                controller.changeIndex(value);
-                              },
-                              overlayColor:
-                                  WidgetStateProperty.resolveWith<Color?>(
-                                (states) {
-                                  if (states.contains(WidgetState.pressed)) {
-                                    return AppColors.bgColor;
-                                  }
-                                  return null;
-                                },
-                              ),
-                              tabs: controller.categories
-                                  .map((category) => Tab(
-                                        text: category.name,
-                                      ))
-                                  .toList(),
-                            ),
+                  controller.isSearched
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 12.0),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 20.0.h),
+                                child: GridView.builder(
+                                  controller: ScrollController(),
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controller.resultSearch.length,
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2, // Количество столбцов
+                                    crossAxisSpacing:
+                                        10.w, // Пространство между столбцами
+                                    mainAxisSpacing: 12.h,
+                                    childAspectRatio: 180.w / 280.h,
+                                    // Пространство между строками
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    final product =
+                                        controller.resultSearch[index];
 
-                            //BUILDER
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.0.h),
-                              child: GridView.builder(
-                                controller: ScrollController(),
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: controller
-                                    .categoryMap[controller.idCategory]?.length,
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2, // Количество столбцов
-                                  crossAxisSpacing:
-                                      10.w, // Пространство между столбцами
-                                  mainAxisSpacing: 12.h,
-                                  childAspectRatio: 180.w / 280.h,
-                                  // Пространство между строками
+                                    return FoodContainerWidget(
+                                      product: product,
+                                    );
+                                  },
                                 ),
-                                itemBuilder: (context, index) {
-                                  if (controller.products.isEmpty) {
-                                    return SizedBox();
-                                  }
-                                  final product = controller
-                                          .categoryMap[controller.idCategory]
-                                      ?[index];
-
-                                  return FoodContainerWidget(
-                                    product: product!,
-                                  );
-                                },
                               ),
-                            ),
+                              SizedBox(height: 100.h),
+                            ],
+                          ),
+                        )
 
-                            SizedBox(height: 100.h),
-                          ],
-                        ),
+                      //TAB BAR
+                      : controller.isLoading
+                          ? SizedBox()
+                          : Column(
+                              children: [
+                                TabBar(
+                                  dividerColor: AppColors.bgColor,
+                                  labelColor: AppColors.widgetColor,
+                                  indicatorColor: AppColors.widgetColor,
+                                  isScrollable: true,
+                                  labelPadding:
+                                      EdgeInsets.symmetric(horizontal: 18.w),
+                                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                                  unselectedLabelColor: AppColors.grey,
+                                  labelStyle: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold),
+                                  unselectedLabelStyle: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold),
+                                  onTap: (value) {
+                                    controller.changeCategory(
+                                        controller.categories[value].id);
+                                    controller.changeIndex(value);
+                                  },
+                                  overlayColor:
+                                      WidgetStateProperty.resolveWith<Color?>(
+                                    (states) {
+                                      if (states
+                                          .contains(WidgetState.pressed)) {
+                                        return AppColors.bgColor;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  tabs: controller.categories
+                                      .map((category) => Tab(
+                                            text: category.name,
+                                          ))
+                                      .toList(),
+                                ),
+
+                                //BUILDER
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20.0.h),
+                                  child: GridView.builder(
+                                    controller: ScrollController(),
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: controller
+                                        .categoryMap[controller.idCategory]
+                                        ?.length,
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2, // Количество столбцов
+                                      crossAxisSpacing:
+                                          10.w, // Пространство между столбцами
+                                      mainAxisSpacing: 12.h,
+                                      childAspectRatio: 180.w / 280.h,
+                                      // Пространство между строками
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      if (controller.products.isEmpty) {
+                                        return SizedBox();
+                                      }
+                                      final product = controller.categoryMap[
+                                          controller.idCategory]?[index];
+
+                                      return FoodContainerWidget(
+                                        product: product!,
+                                      );
+                                    },
+                                  ),
+                                ),
+
+                                SizedBox(height: 100.h),
+                              ],
+                            ),
                 ],
               ),
             ),

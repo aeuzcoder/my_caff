@@ -31,6 +31,7 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
       isFavourite = controller.checkFavourite(widget.product.id);
       return GestureDetector(
         onTap: () {
+          controller.controllerH.unfocusSearch();
           Get.toNamed('/food', arguments: widget.product);
         },
         child: Container(

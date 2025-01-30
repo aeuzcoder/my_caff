@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/controllers/favourite_controller.dart';
-import 'package:my_caff/feauture/presentation/widgets/favourite_widget.dart';
+import 'package:my_caff/feauture/presentation/pages/home_page/widgets/food_container_widget.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_app_bar_widget.dart';
 
 class FavouritePage extends StatelessWidget {
@@ -40,17 +41,33 @@ class FavouritePage extends StatelessWidget {
                   )
                 : Column(
                     children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.products.length,
-                        itemBuilder: (context, index) {
-                          final product = controller.products[index];
-                          return FavouriteWidget(
-                            product: product,
-                            function: () =>
-                                controller.deleteFavouirite(product),
-                          );
-                        },
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0.h),
+                        child: GridView.builder(
+                          controller: ScrollController(),
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: controller.products.length,
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // Количество столбцов
+                            crossAxisSpacing:
+                                10.w, // Пространство между столбцами
+                            mainAxisSpacing: 12.h,
+                            childAspectRatio: 180.w / 280.h,
+                            // Пространство между строками
+                          ),
+                          itemBuilder: (context, index) {
+                            if (controller.products.isEmpty) {
+                              return SizedBox();
+                            }
+                            final product = controller.products[index];
+
+                            return FoodContainerWidget(
+                              product: product,
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),

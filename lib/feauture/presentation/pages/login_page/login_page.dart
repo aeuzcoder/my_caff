@@ -94,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                         passwordCtr: passwordCtr,
                         usernameFocusNode: _usernameFocusNode,
                         passwordFocusNode: _passwordFocusNode,
+                        controllerH: controller,
                       )
                     : SignUpWidget(
                         usernameCtr: usernameCtr,
@@ -106,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                         passwordFocusNode: _passwordFocusNode,
                         emailFocusNode: _emailFocusNode,
                         addressFocusNode: _addressFocusNode,
+                        controllerH: controller,
                       ),
 
                 // BUTTON

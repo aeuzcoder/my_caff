@@ -13,6 +13,7 @@ class OrderController extends BaseController {
   final controllerH = Get.find<HomeController>();
   int selectedTable = 0;
   bool isLoading2 = false;
+  bool isOrder = false;
 
   bool isDone = false;
   @override
@@ -22,9 +23,13 @@ class OrderController extends BaseController {
 
     tables = await getTable();
     order = controllerH.order;
+    if (order.isNotEmpty) {
+      isOrder = true;
+    }
     for (var key in controllerH.order.keys) {
       keysOfFood.add(key);
     }
+
     changeLoading(false);
   }
 
@@ -92,6 +97,14 @@ class OrderController extends BaseController {
       }
     }
     return price;
+  }
+
+  void clearOrder() {
+    order.clear();
+    controllerH.clearOrder();
+    isOrder = false;
+    update();
+    Get.back();
   }
 
   void decrement(int id) {

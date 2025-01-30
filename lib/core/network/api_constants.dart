@@ -9,4 +9,6 @@ class ApiConstants {
   static const String CATEGORY_GET = '/category/get';
   static const String TABLE_GET = '/table/get';
   static const String USERS_GET_OWN = '/users/get_own';
+  static const String UPLOAD_IMAGE = '/users/upload-image';
+  static const String USERS_UPDATE_PROFILE = '/users/update_profil';
 }
