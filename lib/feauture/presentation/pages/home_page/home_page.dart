@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:my_caff/core/utils/app_assets.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
 import 'package:my_caff/feauture/presentation/controllers/home_controller.dart';
+import 'package:my_caff/feauture/presentation/pages/home_page/widgets/order_buttom_widget.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_app_bar_widget.dart';
 import 'package:my_caff/feauture/presentation/pages/home_page/widgets/custom_search_widget.dart';
 import 'package:my_caff/feauture/presentation/pages/home_page/widgets/food_container_widget.dart';
@@ -27,6 +28,13 @@ class _HomePageState extends State<HomePage> {
           initialIndex: controller.indexCategory,
           child: Scaffold(
             //FLOATING BUTTON
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: controller.priceAllProducts() != 0
+                ? !controller.isSearched
+                    ? OrderButtomWidget()
+                    : SizedBox()
+                : SizedBox(),
 
             //APP BAR
             appBar: CustomAppBarWidget(

@@ -49,11 +49,12 @@ class FavouriteWidget extends StatelessWidget {
 
             //TEXT
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //NAME
                 Padding(
-                  padding: const EdgeInsets.only(top: 12, left: 20),
+                  padding: const EdgeInsets.only(left: 20),
                   child: SizedBox(
                     width: 164.w,
                     child: Text(
@@ -78,7 +79,7 @@ class FavouriteWidget extends StatelessWidget {
 
                 //PRICE
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.only(left: 20),
                   child: Text(
                     price == null
                         ? '${AppFunctions.formattingPrice(product.price)} so\'m'

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:my_caff/feauture/domain/entites/category_entity.dart';
+import 'package:my_caff/feauture/domain/entites/my_order_entity.dart';
 import 'package:my_caff/feauture/domain/entites/order_entity.dart';
 import 'package:my_caff/feauture/domain/entites/person_entity.dart';
 import 'package:my_caff/feauture/domain/entites/product_entity.dart';
@@ -39,4 +40,7 @@ abstract class UserRepo {
 
   //CHANGE PROFILE
   Future<Either<String, String>> changeProfile({required UserEntity user});
+
+  //GET ORDERS
+  Future<Either<String, List<MyOrderEntity>>> getOrders();
 }

@@ -7,6 +7,7 @@ import 'package:my_caff/core/network/api_constants.dart';
 import 'package:my_caff/core/services/network_info.dart';
 import 'package:my_caff/feauture/data/datasources/network/network_service.dart';
 import 'package:my_caff/feauture/data/models/category_model.dart';
+import 'package:my_caff/feauture/data/models/my_order_model.dart';
 import 'package:my_caff/feauture/data/models/order_model.dart';
 import 'package:my_caff/feauture/data/models/person_model.dart';
 import 'package:my_caff/feauture/data/models/product_model.dart';
@@ -14,6 +15,7 @@ import 'package:my_caff/feauture/data/models/sign_in_model.dart';
 import 'package:my_caff/feauture/data/models/table_model.dart';
 import 'package:my_caff/feauture/data/models/user_model.dart';
 import 'package:my_caff/feauture/domain/entites/category_entity.dart';
+import 'package:my_caff/feauture/domain/entites/my_order_entity.dart';
 import 'package:my_caff/feauture/domain/entites/order_entity.dart';
 import 'package:my_caff/feauture/domain/entites/person_entity.dart';
 import 'package:my_caff/feauture/domain/entites/product_entity.dart';
@@ -106,10 +108,10 @@ class UserRepoImpl implements UserRepo {
       var response = await NetworkService.POST(
           ApiConstants.ORDER_CREATE, createOrderFromEntity(order));
       var result = jsonDecode(response ?? '');
-      log("RESULT: $result");
       return Right(result['message']);
+    } on BadRequestException {
+      return Left('Yetarli maxsulot yo\'q');
     } catch (e) {
-      log('EROR: ${e.toString()}');
       return Left(e.toString());
     }
   }
@@ -178,6 +180,22 @@ class UserRepoImpl implements UserRepo {
           body: createUserFromEntity(user));
       var result = jsonDecode(response ?? '');
       return Right(result['message']);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, List<MyOrderEntity>>> getOrders() async {
+    try {
+      var response = await NetworkService.GET(
+          ApiConstants.GET_OWN, NetworkService.paramsEmpty());
+      var resultJson = jsonDecode(response!);
+      List<MyOrderEntity> result = resultJson
+          .map<MyOrderEntity>((order) => MyOrderModel.fromJson(order))
+          .toList();
+
+      return Right(result);
     } catch (e) {
       return Left(e.toString());
     }

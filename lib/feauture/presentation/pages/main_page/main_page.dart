@@ -10,27 +10,13 @@ import 'package:my_caff/feauture/presentation/pages/home_page/widgets/order_butt
 import 'package:my_caff/feauture/presentation/pages/profile_page/profile_page.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_svg.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MainController>(builder: (controller) {
       return Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:
-            controller.currentIndex != 2 && controller.currentIndex != 3
-                ? controller.controllerH.priceAllProducts() != 0
-                    ? !controller.controllerH.isSearched
-                        ? OrderButtomWidget()
-                        : SizedBox()
-                    : SizedBox()
-                : SizedBox(),
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: controller.pageController,

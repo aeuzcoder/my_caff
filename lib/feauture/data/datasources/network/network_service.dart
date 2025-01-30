@@ -135,15 +135,20 @@ class NetworkService {
     String reason = response.reasonPhrase!;
     switch (response.statusCode) {
       case 400:
+        log('BAD REQUEST EXCEPRION: 400');
         throw BadRequestException(reason);
       case 401:
+        log('INVALID INPUT EXCEPTION: 401');
         throw InvalidInputException(reason);
       case 403:
+        log('UNAUTHORIZED EXCEPRION: 403');
         throw UnauthorisedException(reason);
       case 404:
+        log('FETCH DATA EXCEPRION: 404');
         throw FetchDataException(reason);
       case 500:
       default:
+        log('FETCH DATA EXCEPRION: ERROR');
         throw FetchDataException(reason);
     }
   }

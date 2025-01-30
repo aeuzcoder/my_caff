@@ -97,6 +97,9 @@ class HomeController extends BaseController {
   void decrement(int id) {
     if (order[id]! > 0) {
       order[id] = order[id]! - 1;
+      if (order[id] == 0) {
+        order.remove(id);
+      }
 
       update();
     }
@@ -118,10 +121,10 @@ class HomeController extends BaseController {
 
   void deleteProduct(int id) {
     if (order.containsKey(id)) {
-      if (order[id] == 0) {
-        return;
-      }
       order[id] = order[id]! - 1;
+      if (order[id] == 0) {
+        order.remove(id);
+      }
     }
     update();
   }

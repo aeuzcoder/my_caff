@@ -72,21 +72,17 @@ class OrderController extends BaseController {
         location: LocationEntity(latitude: -90, longitude: -180),
       ),
     );
-    if (productsJson.isRight()) {
-      var result = productsJson.getOrElse(() => throw ServerException());
+    String message = productsJson.fold((message) {
+      change2(false);
+      return message;
+    }, (state) {
       change2(false);
 
-      return result;
-    }
-    if (productsJson.isLeft()) {
-      var result = productsJson.getOrElse(() => throw ServerException());
-      change2(false);
-
-      return result;
-    }
+      return state;
+    });
     change2(false);
 
-    return 'Operatsiya Amalga oshmadi';
+    return message;
   }
 
   double priceOfOrderById(int id) {
@@ -110,6 +106,9 @@ class OrderController extends BaseController {
   void decrement(int id) {
     if (order[id]! > 0) {
       controllerH.decrement(id);
+      if (controllerH.order.isEmpty) {
+        isOrder = false;
+      }
       update();
     }
   }

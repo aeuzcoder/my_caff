@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:my_caff/core/utils/app_assets.dart';
 import 'package:my_caff/core/utils/app_colors.dart';
+import 'package:my_caff/core/utils/app_functions.dart';
 import 'package:my_caff/feauture/presentation/controllers/order_controller.dart';
 import 'package:my_caff/feauture/presentation/pages/order_page/widgets/table_widget.dart';
 import 'package:my_caff/feauture/presentation/widgets/custom_app_bar_widget.dart';
@@ -60,7 +61,7 @@ class OrderPage extends StatelessWidget {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
               appBar: CustomAppBarWidget(
-                title: 'Order',
+                title: 'Buyurtma',
                 leftIcon: AppAssets.icons.left,
                 rightIcon: controller.isOrder
                     ? Icon(
@@ -193,13 +194,25 @@ class OrderPage extends StatelessWidget {
                                   );
                                 },
                               ),
-
-                              //TEXT TABLES
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 24.0.w, vertical: 12.h),
                                 child: Text(
-                                  'Joylar',
+                                  'Jami: ${AppFunctions.formattingPrice(controller.controllerH.priceAllProducts())}',
+                                  style: TextStyle(
+                                    color: AppColors.grey,
+                                    fontSize: 22.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+
+                              //TEXT TABLES
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: 24.0.w, bottom: 12.h),
+                                child: Text(
+                                  'Stollar',
                                   style: TextStyle(
                                     color: AppColors.black,
                                     fontSize: 22.sp,
@@ -221,7 +234,7 @@ class OrderPage extends StatelessWidget {
                               ),
 
                               SizedBox(
-                                height: 100.h,
+                                height: 200.h,
                               ),
                             ],
                           ),

@@ -11,4 +11,5 @@ class ApiConstants {
   static const String USERS_GET_OWN = '/users/get_own';
   static const String UPLOAD_IMAGE = '/users/upload-image';
   static const String USERS_UPDATE_PROFILE = '/users/update_profil';
+  static const String GET_OWN = '/order/get_own';
 }
