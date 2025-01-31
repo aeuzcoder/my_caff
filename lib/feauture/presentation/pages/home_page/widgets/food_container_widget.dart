@@ -147,7 +147,7 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
               ),
               SizedBox(height: 12.h),
 
-              //ROW ADD AND PRICE
+              // ADD AND REMOVE
 
               GestureDetector(
                 onTap: () {
@@ -159,9 +159,9 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                   } else {}
                 },
                 child: Container(
-                  height: 24.h,
+                  height: 26.h,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                     boxShadow: [
                       BoxShadow(
                         color: AppColors.grey.withOpacity(0.8),
@@ -171,15 +171,14 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                     ],
                     color: AppColors.widgetColor,
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Row(
-                      mainAxisAlignment: count == 0
-                          ? MainAxisAlignment.center
-                          : MainAxisAlignment.spaceBetween,
-                      children: [
-                        count != 0
-                            ? GestureDetector(
+                  child: Row(
+                    mainAxisAlignment: count == 0
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.spaceBetween,
+                    children: [
+                      count != 0
+                          ? Expanded(
+                              child: GestureDetector(
                                 onTap: () {
                                   setState(() {
                                     count--;
@@ -187,10 +186,11 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                                         .deleteProduct(widget.product.id);
                                   });
                                 },
-                                child: Center(
-                                  child: Container(
-                                    width: 40.w,
-                                    color: AppColors.widgetColor,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                  child: Center(
                                     child: Icon(
                                       size: 20.w,
                                       Icons.remove,
@@ -198,18 +198,20 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                                     ),
                                   ),
                                 ),
-                              )
-                            : SizedBox(),
-                        count != 0
-                            ? Text(
-                                count.toString(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.white,
-                                    fontSize: 14.sp),
-                              )
-                            : SizedBox(),
-                        GestureDetector(
+                              ),
+                            )
+                          : SizedBox(),
+                      count != 0
+                          ? Text(
+                              count.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.white,
+                                  fontSize: 14.sp),
+                            )
+                          : SizedBox(),
+                      Expanded(
+                        child: GestureDetector(
                           onTap: () {
                             setState(() {
                               count++;
@@ -217,10 +219,11 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                             controller.controllerH
                                 .addProduct(widget.product.id);
                           },
-                          child: Center(
-                            child: Container(
-                              width: 40.w,
-                              color: AppColors.widgetColor,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            child: Center(
                               child: Icon(
                                 size: 20.w,
                                 Icons.add,
@@ -228,9 +231,9 @@ class _FoodContainerWidgetState extends State<FoodContainerWidget> {
                               ),
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               )

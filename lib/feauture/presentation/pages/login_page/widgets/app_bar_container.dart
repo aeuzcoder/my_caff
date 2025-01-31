@@ -22,7 +22,9 @@ class AppBarContainer extends StatelessWidget {
         height: ScreenUtil().screenHeight / 3,
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
           color: AppColors.bgColor,
         ),
         child: Column(

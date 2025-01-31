@@ -30,7 +30,7 @@ void main() async {
   //For system colors
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // Прозрачный цвет
+      statusBarColor: AppColors.bgColor, // Прозрачный цвет
       statusBarIconBrightness:
           Brightness.dark, // Темные иконки (для светлого фона)
       systemNavigationBarColor:
